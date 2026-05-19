@@ -78,7 +78,9 @@ void main(String[] args) {
 void runDebugTool(String[] args) {
     if (args.length < 3) {
         System.err.println("Error: 'debug-tool' requires <tool-name> and tool args");
-        System.err.println("Usage: jfrdoc debug-tool jfr-summary <jfr-file>");
+        System.err.println("Usage:");
+        System.err.println("  jfrdoc debug-tool jfr-summary <jfr-file>");
+        System.err.println("  jfrdoc debug-tool jfr-top-methods <jfr-file> [--top-n N] [--framework spring|quarkus|other]");
         System.exit(1);
     }
     String toolName = args[1];
@@ -91,12 +93,58 @@ void runDebugTool(String[] args) {
             System.out.println(result);
             if (result.startsWith("Error:")) System.exit(1);
         }
+        case "jfr-top-methods" -> runJfrTopMethods(args);
         default -> {
             System.err.println("Error: unknown tool '" + toolName + "'");
-            System.err.println("Available debug tools: jfr-summary");
+            System.err.println("Available debug tools: jfr-summary, jfr-top-methods");
             System.exit(1);
         }
     }
+}
+
+void runJfrTopMethods(String[] args) {
+    String jfrPath = args[2];
+    Integer topN = null;
+    String framework = null;
+
+    int i = 3;
+    while (i < args.length) {
+        String flag = args[i];
+        switch (flag) {
+            case "--top-n" -> {
+                if (i + 1 >= args.length) {
+                    System.err.println("Error: --top-n requires a value");
+                    System.exit(1);
+                }
+                try {
+                    topN = Integer.parseInt(args[++i]);
+                } catch (NumberFormatException ex) {
+                    System.err.println("Error: --top-n must be an integer");
+                    System.exit(1);
+                }
+            }
+            case "--framework" -> {
+                if (i + 1 >= args.length) {
+                    System.err.println("Error: --framework requires a value");
+                    System.exit(1);
+                }
+                framework = args[++i];
+            }
+            default -> {
+                System.err.println("Error: unknown flag '" + flag + "' for jfr-top-methods");
+                System.exit(1);
+            }
+        }
+        i++;
+    }
+
+    var tool = new JfrTopMethodsTool();
+    var input = new JSONObject().put("path", jfrPath);
+    if (topN != null) input.put("top_n", topN.intValue());
+    if (framework != null) input.put("framework", framework);
+    String result = tool.execute(input);
+    System.out.println(result);
+    if (result.startsWith("Error:")) System.exit(1);
 }
 
 String usage() {
