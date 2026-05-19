@@ -29,16 +29,25 @@ No Maven, no Gradle, no npm. Java 25's source-file mode runs the script directly
 
 ## Usage
 
-> **Planned — not yet implemented.** Today is scaffolding only; the CLI parses flags but does not yet read JFR data.
-
 ```bash
-./jfrdoc analyze recording.jfr \
+./jfrdoc analyze samples/test.jfr \
+    --framework quarkus \
     --container-memory 2Gi \
-    --container-cpu 1 \
-    --framework quarkus
+    --container-cpu 1
 ```
 
-This will (eventually) produce a markdown report diagnosing what went wrong in the recording.
+Produces a markdown report on stdout (zsmith progress chatter goes to stderr,
+so `./jfrdoc analyze ... > report.md` gives you a clean file).
+
+Requires `anthropic.api.key` configured in `~/.zsmith/app.properties`:
+
+```
+anthropic.api.key=sk-ant-...
+anthropic.version=2023-06-01
+```
+
+Each analysis costs roughly $0.50–$2.00 in API charges with zsmith's
+default model (currently `claude-opus-4-7`).
 
 ## Development
 
