@@ -40,6 +40,24 @@ No Maven, no Gradle, no npm. Java 25's source-file mode runs the script directly
 
 This will (eventually) produce a markdown report diagnosing what went wrong in the recording.
 
+## Development
+
+Generate a sample `.jfr` recording for local testing:
+
+```bash
+./samples/gen-sample.sh
+```
+
+Each individual tool can be exercised directly via the `debug-tool`
+subcommand — useful for verifying the JSON it returns to the agent
+loop without going through the full analysis pipeline:
+
+```bash
+./jfrdoc debug-tool jfr-summary samples/test.jfr
+./jfrdoc debug-tool jfr-top-methods samples/test.jfr --top-n 10
+./jfrdoc debug-tool jfr-top-methods samples/test.jfr --top-n 5 --framework quarkus
+```
+
 ## What it diagnoses
 
 - OOMKill root cause (heap + off-heap + native memory vs container limit)
