@@ -42,7 +42,7 @@ The category split is highly unusual for a steady-state Spring Boot app: **user_
 3. **Address "High exception-throw rate"**: Enable `-XX:+UnlockDiagnosticVMOptions -XX:+PrintConcurrentLocks` is not needed here — instead, add a JFR view or run `jfr print --events jdk.JavaExceptionThrow petclinic.jfr | head -50` to identify the exception classes and call sites. If they are from validation, auth, or `NoSuchElementException` in Optional flows, refactor to non-exceptional control flow.
 
 ## Analysis Limitations
-This Day 4 prototype analyzes CPU samples only. The following are NOT yet covered and would change the picture if data is available:
+This build analyzes CPU samples only. The following are NOT yet covered and would change the picture if data is available:
 - Garbage collection behavior (pause times, frequency, generational pressure)
 - Heap and off-heap memory pressure vs container limits
 - Object allocation hotspots (allocation rate, TLAB pressure)
