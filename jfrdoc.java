@@ -299,7 +299,7 @@ static final String SYSTEM_PROMPT = """
         If there are no findings, write: "No code or configuration changes recommended based on this recording." Do not invent recommendations.]
 
         ## Analysis Limitations
-        This Day 4 prototype analyzes CPU samples only. The following are NOT yet covered and would change the picture if data is available:
+        This build analyzes CPU samples only. The following are NOT yet covered and would change the picture if data is available:
         - Garbage collection behavior (pause times, frequency, generational pressure)
         - Heap and off-heap memory pressure vs container limits
         - Object allocation hotspots (allocation rate, TLAB pressure)
