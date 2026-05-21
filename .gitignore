@@ -11,6 +11,7 @@ samples/*.jfr
 
 # IntelliJ
 .idea/
+*.iml
 
 # VS Code
 .vscode/
