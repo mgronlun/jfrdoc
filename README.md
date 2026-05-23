@@ -115,7 +115,7 @@ jfrdoc reads `.jfr` files via `jdk.jfr.consumer.RecordingFile` from the JDK — 
 ## Sample report
 
 [`samples/petclinic-report.md`](samples/petclinic-report.md) — end-to-end run against a 60-second JFR of [Spring PetClinic](https://github.com/spring-projects/spring-petclinic) 4.0.0-SNAPSHOT under HTTP load.
-Raw tool outputs (handy as prompt-tuning fixtures): [`petclinic-summary.json`](samples/petclinic-summary.json), [`petclinic-top-methods.json`](samples/petclinic-top-methods.json).
+Raw tool outputs (handy as prompt-tuning fixtures): [`petclinic-summary.json`](samples/petclinic-summary.json), [`petclinic-top-methods.json`](samples/petclinic-top-methods.json), [`petclinic-gc-stats.json`](samples/petclinic-gc-stats.json).
 
 ---
 
