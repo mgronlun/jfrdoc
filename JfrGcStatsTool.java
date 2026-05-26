@@ -71,6 +71,7 @@ public class JfrGcStatsTool implements Tool {
         long longOver500 = 0;
         long explicitSystemGcs = 0;
         long humongousAllocations = 0;
+        long evacuationFailures = 0;
 
         long heapSnapshots = 0;
         long minHeapUsed = Long.MAX_VALUE;
@@ -125,6 +126,7 @@ public class JfrGcStatsTool implements Tool {
                     case "jdk.GCConfiguration" -> {
                         if (configuration == null) configuration = readConfiguration(e);
                     }
+                    case "jdk.EvacuationFailed" -> evacuationFailures++;
                     case "jdk.GCHeapSummary" -> {
                         Long heapUsed = tryGetLong(e, "heapUsed");
                         Long committedSize = readCommittedSize(e);
@@ -221,6 +223,7 @@ public class JfrGcStatsTool implements Tool {
         anomalies.put("long_pauses_over_500ms", longOver500);
         anomalies.put("explicit_system_gcs", explicitSystemGcs);
         anomalies.put("humongous_allocations", humongousAllocations);
+        anomalies.put("evacuation_failures", evacuationFailures);
         result.put("anomalies", anomalies);
 
         return result;

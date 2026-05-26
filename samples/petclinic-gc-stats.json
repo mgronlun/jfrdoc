@@ -59,6 +59,7 @@
   },
   "anomalies": {
     "long_pauses_over_100ms": 1,
+    "evacuation_failures": 0,
     "explicit_system_gcs": 0,
     "full_gcs": 0,
     "humongous_allocations": 0,
